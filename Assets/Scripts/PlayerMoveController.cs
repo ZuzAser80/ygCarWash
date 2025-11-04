@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class PlayerMoveController : MonoBehaviour
 {
+    public float range = 5f;
+    public static float Range;
     public float walkingSpeed = 7.5f;
     public float runningSpeed = 11.5f;
     public float jumpSpeed = 8.0f;
@@ -24,7 +26,7 @@ public class PlayerMoveController : MonoBehaviour
     void Start()
     {
         characterController = GetComponent<CharacterController>();
-
+        Range = range;
         // Lock cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -32,7 +34,8 @@ public class PlayerMoveController : MonoBehaviour
 
     void Update()
     {
-        // We are grounded, so recalculate move direction based on axes
+        // We are grounded, so rec
+        // alculate move direction based on axes
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
         // Press Left Shift to run
