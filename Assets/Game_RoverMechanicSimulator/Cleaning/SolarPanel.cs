@@ -62,23 +62,6 @@ public class SolarPanel : MonoBehaviour {
                 }
                 lastPaintPixelPosition = paintPixelPosition;
 
-                /*
-                // Paint Square in Dirt Mask
-                int squareSize = 32;
-                int pixelXOffset = pixelX - (dirtBrush.width / 2);
-                int pixelYOffset = pixelY - (dirtBrush.height / 2);
-
-                for (int x = 0; x < squareSize; x++) {
-                    for (int y = 0; y < squareSize; y++) {
-                        dirtMaskTexture.SetPixel(
-                            pixelXOffset + x,
-                            pixelYOffset + y,
-                            Color.black
-                        );
-                    }
-                }
-                //*/
-
 
                 //* 
                 int pixelXOffset = pixelX - (dirtBrush.width / 2);
