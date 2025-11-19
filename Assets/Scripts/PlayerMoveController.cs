@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -53,6 +54,16 @@ public class PlayerMoveController : MonoBehaviour
         else
         {
             moveDirection.y = movementDirectionY;
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            characterController.transform.localScale = new Vector3(characterController.transform.localScale.x, characterController.transform.localScale.y *2 , characterController.transform.localScale.z);
+        }
+
+        if (characterController.isGrounded && Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            characterController.transform.localScale = new Vector3(characterController.transform.localScale.x, characterController.transform.localScale.y / 2, characterController.transform.localScale.z);
         }
 
         // Apply gravity. Gravity is multiplied by deltaTime twice (once here, and once below

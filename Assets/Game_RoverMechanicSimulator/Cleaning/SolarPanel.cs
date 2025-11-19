@@ -17,18 +17,21 @@ public class SolarPanel : MonoBehaviour {
     private float dirtAmount;
     private Vector2Int lastPaintPixelPosition;
 
-    private void Awake() {
+    private void Awake()
+    {
         playerBrushSwitch = FindFirstObjectByType<PlayerBrushSwitch>();
 
         dirtMaskTexture = new Texture2D(dirtMaskTextureBase.width, dirtMaskTextureBase.height);
         dirtMaskTexture.SetPixels(dirtMaskTextureBase.GetPixels());
         dirtMaskTexture.Apply();
-        
+
         material.SetTexture("_DirtMask", dirtMaskTexture);
 
         dirtAmountTotal = 0f;
-        for (int x = 0; x < dirtMaskTextureBase.width; x++) {
-            for (int y = 0; y < dirtMaskTextureBase.height; y++) {
+        for (int x = 0; x < dirtMaskTextureBase.width; x++)
+        {
+            for (int y = 0; y < dirtMaskTextureBase.height; y++)
+            {
                 dirtAmountTotal += dirtMaskTextureBase.GetPixel(x, y).g;
             }
         }
@@ -37,14 +40,23 @@ public class SolarPanel : MonoBehaviour {
         // FunctionPeriodic.Create(() => {
         //     uiText.text = Mathf.RoundToInt(GetDirtAmount() * 100f) + "%";
         // }, .03f);
+        //UpdateBrush();
+        playerBrushSwitch.onRotationChanged += delegate { UpdateBrush(); };
     }
+
+    void Start()
+    {
+        UpdateBrush();  
+    }
+
+    private void UpdateBrush() => dirtBrush = playerBrushSwitch.current.Texture;
 
     private void Update() {
         if (Input.GetMouseButton(0)) {
 
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit raycastHit, PlayerMoveController.Range))
             {
-                dirtBrush = playerBrushSwitch.current.Texture;
+                
                 Vector2 textureCoord = raycastHit.textureCoord;
 
                 int pixelX = (int)(textureCoord.x * dirtMaskTexture.width);
@@ -77,11 +89,13 @@ public class SolarPanel : MonoBehaviour {
                         float removedAmount = pixelDirtMask.g - (pixelDirtMask.g * pixelDirt.g);
                         dirtAmount -= removedAmount;
 
+                        //Debug.Log("");
+
                         dirtMaskTexture.SetPixel(
-                            pixelXOffset + x,
-                            pixelYOffset + y,
-                            new Color(0, pixelDirtMask.g * pixelDirt.g, 0, 0)
-                        );
+                                pixelXOffset + x,
+                                pixelYOffset + y,
+                                new Color(0, pixelDirtMask.g * pixelDirt.g, 0, 0)
+                            );
                     }
                 }
                 //*/

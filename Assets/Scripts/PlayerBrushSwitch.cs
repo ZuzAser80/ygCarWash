@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEditor.TerrainTools;
 using UnityEngine;
@@ -8,6 +9,8 @@ public class PlayerBrushSwitch : MonoBehaviour
     public Brush current;
 
     public PlayerInputActions inputActions;
+
+    public event Action onRotationChanged = delegate { };
 
     void Awake()
     {
@@ -24,7 +27,7 @@ public class PlayerBrushSwitch : MonoBehaviour
             Debug.Log("switched brush to: " + (inputActions.Player.Brush.ReadValue<float>() - 1));
             current = brushes[(int)inputActions.Player.Brush.ReadValue<float>() - 1];
         };
-        
+        inputActions.Player.Rotate.performed += delegate { current.IsRotated = !current.IsRotated;  onRotationChanged?.Invoke(); };
     }
 
 
