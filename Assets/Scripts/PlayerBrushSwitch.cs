@@ -20,16 +20,14 @@ public class PlayerBrushSwitch : MonoBehaviour
 
     void Start()
     {
-        
         current = brushes[0];
         inputActions.Player.Brush.performed += delegate
         {
-            Debug.Log("switched brush to: " + (inputActions.Player.Brush.ReadValue<float>() - 1));
+            //Debug.Log("switched brush to: " + (inputActions.Player.Brush.ReadValue<float>() - 1));
             current = brushes[(int)inputActions.Player.Brush.ReadValue<float>() - 1];
         };
         inputActions.Player.Rotate.performed += delegate { current.IsRotated = !current.IsRotated;  onRotationChanged?.Invoke(); };
     }
-
 
 
 }
